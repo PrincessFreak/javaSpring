@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>~UnI sToRe CoRn~</title>
+    <link rel="stylesheet" type="text/html" href="/css/style.css">
+</head>
+<body>
+<div>
+    <button><a href="users/userAuthorization">Авторизация</a></button>
+    <button><a href="users/userRegistration">Перейти к регистрации</a></button>
+</div>
+<div>
+    <div>
+        <p>Поиск товаров</p>
+        <form th:method="post" th:action="@{/index}">
+            <div>
+                <label for="search">Поиск: </label>
+                <input type="text" id="search" name="search" placeholder="Поиск" th:value="*{search_value}">
+            </div>
+            <div>
+                <p>Сортировка по стоимости</p>
+                <div>
+                    <div>
+                        <label for="from">Минимальная стоимость: </label>
+                        <input type="text" id="from" name="from" th:value="*{price_from}">
+                    </div>
+                    <div>
+                        <label for="to">Максимальная стоимость: </label>
+                        <input type="text" id="to" name="to" th:value="*{price_to}">
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <input type="radio" id="price_asc" name="price" value="asc_price">
+                        <label for="price_asc">по возрастанию</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="price_desc" name="price" value="desc_price">
+                        <label for="price_desc">по убыванию</label>
+                    </div>
+                </div>
+                <p>Сортировка по категории</p>
+                <div>
+                    <div>
+                        <input type="radio" id="category_a" name="categorys">
+                        <label for="category_a">Категория А</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="category_b" name="categorys">
+                        <label for="category_b">Категория Б</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="category_c" name="categorys">
+                        <label for="category_c">Категория В</label>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="Подтвердить">
+        </form>
+    </div>
+    <div>
+        <p>Результаты поиска</p>
+        <div th:each="products : ${search_product}" class="cardBox">
+            <a th:href="@{/products/productView/{id}(id=${products.getId()})}" th:text="${products.getProductTitle()}">
+                <img th:src="'/img/' + ${products.imageList[0].getImageName()}" alt="">
+                <p th:text="'Наименование: ' + ${products.getProductTitle()}"></p>
+                <p th:text="'Стоимость: ' + ${products.getProductPrice()}"></p>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>~UnI aDmIn CoRn~</title>
+    <link rel="stylesheet" type="text/html" href="/css/style.css">
+</head>
+<body>
+<p>Панель управления администратора</p>
+<a href="users/adminIndex">Вернуться</a>
+<form method="post" action="/logout">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <button type="submit">Выход</button>
+</form>
+
+<p>Добавить новый товар</p>
+
+<form th:method="post" th:action="@{/products/productAdd}" th:object="${product}" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td><label for="productTitle">Наименование товара:</label></td>
+            <td><input type="text" th:field="*{productTitle}" id="productTitle" name="productTitle" placeholder="Наименование"></td>
+            <td><p th:if="${#fields.hasErrors('productTitle')}" th:errors="*{productTitle}" class="error"></p></td>
+        </tr>
+        <tr>
+            <td><label for="productDescription">Описание товара:</label></td>
+            <td><textarea th:field="*{productDescription}" id="productDescription" name="productDescription" placeholder="Описание"></textarea></td>
+            <td><p th:if="${#fields.hasErrors('productDescription')}" th:errors="*{productDescription}" class="error"></p></td>
+        </tr>
+        <tr>
+            <td><label for="productPrice">Стоимость товара:</label></td>
+            <td><input type="number" th:field="*{productPrice}" id="productPrice" name="productPrice" min="1" step="0.01"></td>
+            <td><p th:if="${#fields.hasErrors('productPrice')}" th:errors="*{productPrice}" class="error"></p></td>
+        </tr>
+        <tr>
+            <td><label for="category">Категория товара:</label></td>
+            <td>
+                <select name="category" th:field="*{category}" id="category">
+                    <div th:each="element : ${category}">
+                        <option th:text="${element.getCategoryName()}" th:value="${element.getId()}"></option>
+                    </div>
+                </select>
+            </td>
+            <td><p th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="error"></p></td>
+        </tr>
+        <tr>
+            <td><label for="warehouse">Скад:</label></td>
+            <td><input type="text" th:field="*{warehouse}" id="warehouse" name="warehouse" placeholder="Склад"></td>
+            <td><p th:if="${#fields.hasErrors('warehouse')}" th:errors="*{warehouse}" class="error"></p></td>
+        </tr>
+        <tr>
+            <td><label for="seller">Продавец:</label></td>
+            <td><input type="text" th:field="*{seller}" id="seller" name="seller" placeholder="Продавец"></td>
+            <td><p th:if="${#fields.hasErrors('seller')}" th:errors="*{seller}" class="error"></p></td>
+        </tr>
+        <tr>
+            <td><p>Добавить изображение товара:</p></td>
+            <td>
+                <input type="file" name="image_one">
+                <input type="file" name="image_two">
+                <input type="file" name="image_three">
+                <input type="file" name="image_four">
+                <input type="file" name="image_five">
+            </td>
+        </tr>
+        <tr>
+            <td><button type="submit">Подтвердить</button></td>
+            <td></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

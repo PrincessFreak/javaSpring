@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>~UnI sToRe CoRn~</title>
+</head>
+<body>
+<a href="users/userAuthorization">Авторизация</a>
+<a href="users/userRegistration">Перейти к регистрации</a>
+<a href="products/productsList">Каталог товаров</a>
+
+<div>
+    <p>Информация о товаре</p>
+    <div>
+        <div th:each="img : ${product.imageList}">
+            <img th:src="'/img/' + ${img.getImageName()}" class="cardImage">
+        </div>
+        <p th:text="'Наименование товара: ' + ${product.getProductTitle}"></p>
+        <p th:text="'Описание товара: ' + ${product.getProductDescription()}"></p>
+        <p th:text="'Стоимость товара: ' + ${product.getProductPrice()}"></p>
+        <p th:text="'категория: ' + ${product.getCategory().getCategoryName()}"></p>
+        <p th:text="'Продавец: ' + ${product.getSeller()}"></p>
+    </div>
+</div>
+<a href="/">Главная страница</a>
+</body>
+</html>

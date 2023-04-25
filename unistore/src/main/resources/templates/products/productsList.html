@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>~UnI sToRe CoRn~</title>
+    <link rel="stylesheet" type="text/html" href="/css/style.css">
+</head>
+<body>
+<div>
+    <p>Каталог товаров</p>
+    <div th:each="products : ${product}">
+        <img th:src="'/img/' + ${products.imageList[0]}" class="cardImage">
+        <p th:text="'Наименование товара: ' + ${products.getProductTitle}"></p>
+        <p th:text="'Стоимость товара: ' + ${products.getProductPrice()}"></p>
+        <a th:href="@{/products/productView/{id}(id=${products.getId()})}" th:text="${products.getProductTitle()}">Перейти к товару</a>
+    </div>
+</div>
+</body>
+</html>

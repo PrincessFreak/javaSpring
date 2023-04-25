@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>~UnI sToRe CoRn~</title>
+    <link rel="stylesheet" type="text/html" href="/css/style.css">
+</head>
+<body>
+<a href="products/productsList">Показать список товаров</a>
+<form method="post" action="/logout">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <button type="submit">Выход</button>
+</form>
+
+<p>Корзина товаров</p>
+<div th:each="product : ${cart_product}">
+    <img th:src="'/img/' + ${product.imageList[0].getImageName()}" alt="">
+    <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getProductTitle()}"></a>
+    <p th:text="'Цена: ' + ${product.getProductPrice()}"></p>
+    <a th:href="@{/orders/userCart/delete/{id}(id=${product.getId()})}">Удалить</a>
+</div>
+<p th:text="'Итоговая цена: ' + ${price}"></p>
+<a href="/orders/create">Оформить заказ</a>
+</body>
+</html>

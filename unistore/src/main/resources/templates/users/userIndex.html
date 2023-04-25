@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>~UnI uSeR cOrN~</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<form method="get" th:action="@{/orders/userOrder}">
+    <button type="submit">Заказы</button>
+</form>
+<form method="get" th:action="@{/orders/userCart}">
+    <button type="submit">Корзина</button>
+</form>
+<form method="post" action="/logout">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <button type="submit">Выход</button>
+</form>
+
+<div>
+    <p>Поиск товаров</p>
+    <form th:method="post" th:action="@{/users/userIndex}">
+        <div>
+            <label for="search">Поиск: </label>
+            <input type="text" id="search" name="search" placeholder="Поиск" th:value="*{search_value}">
+        </div>
+        <div>
+            <p>Сортировка по стоимости</p>
+            <div>
+                <div>
+                    <label for="from">Минимальная стоимость: </label>
+                    <input type="text" id="from" name="from" th:value="*{price_from}">
+                </div>
+                <div>
+                    <label for="to">Максимальная стоимость: </label>
+                    <input type="text" id="to" name="to" th:value="*{price_to}">
+                </div>
+            </div>
+            <div>
+                <div>
+                    <input type="radio" id="price_asc" name="price" value="asc_price">
+                    <label for="price_asc">по возрастанию</label>
+                </div>
+                <div>
+                    <input type="radio" id="price_desc" name="price" value="desc_price">
+                    <label for="price_desc">по убыванию</label>
+                </div>
+            </div>
+            <p>Сортировка по категории</p>
+            <div>
+                <div>
+                    <input type="radio" id="category_a" name="categorys">
+                    <label for="category_a">Категория А</label>
+                </div>
+                <div>
+                    <input type="radio" id="category_b" name="categorys">
+                    <label for="category_b">Категория Б</label>
+                </div>
+                <div>
+                    <input type="radio" id="category_c" name="categorys">
+                    <label for="category_c">Категория В</label>
+                </div>
+            </div>
+        </div>
+        <input type="submit" value="Подтвердить">
+    </form>
+</div>
+<p>Результаты поиска: </p>
+<div th:each="product : ${search_product}" class="cardBox">
+    <a th:href="@{/products/productView/{id}(id=${product.getId()})}" th:text="${product.getProductTitle()}">
+        <img th:src="'/img/' + ${product.imageList[0].getImageName()}">
+        <p th:text="'Наименование: ' + ${product.getProductTitle()}"></p>
+        <p th:text="'Стоимость: ' + ${product.getProductPrice()}"></p>
+    </a>
+</div>
+<p>Доступные товары: </p>
+<div th:each="products : ${product}" class="cardBox">
+    <img th:src="'/img/' + ${products.imageList[0].getImageName()}">
+    <a th:href="@{/products/productView/{id}(id=${products.getId()})}" th:text="${products.getProductTitle()}"></a>
+    <p th:text="'Цена: ' + ${products.getProductPrice()}"></p>
+    <a th:href="@{/orders/add/{id}(id=${products.getId()})}">Добавить товар в корзину</a>
+</div>
+</body>
+</html>

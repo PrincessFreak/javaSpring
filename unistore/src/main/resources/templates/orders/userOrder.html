@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>~UnI sToRe CoRn~</title>
+    <link rel="stylesheet" type="text/html" href="/css/style.css">
+</head>
+<body>
+<form method="post" action="/logout">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <button type="submit">Выход</button>
+</form>
+
+<p>Заказы</p>
+<div th:each="order : ${orders}">
+    <p th:text="'Заказ №' + ${order.getNumber()}"></p>
+    <img th:src="'/img/' + ${order.getProduct().getImageList()[0].getImageName()}" alt="">
+    <p th:text="'Наименование: ' + ${order.getProduct().getProductTitle()}">
+    <p th:text="'Количество: ' + ${order.getCount()}">
+    <p th:text="'Цена: ' + ${order.getPrice()}">
+    <p th:text="'Дата заказа: ' + ${#temporals.format(order.getDateTime(), 'dd-MMM-yyyy')}"></p>
+    <p th:text="'Cтатус: ' + ${order.getStatus()}">
+</div>
+</body>
+</html>
